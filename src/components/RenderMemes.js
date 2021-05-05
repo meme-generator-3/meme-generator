@@ -15,23 +15,19 @@ export default class RenderMemes extends Component {
   componentDidMount(){
     axios.get("https://api.imgflip.com/get_memes")
     .then(response => {
-      const data = response.data;
+      const data = response.data.data.memes;
       this.setState({meme: data}
     )
-
-      console.log(this.state.meme)
   })
   }
 
   render() {
-   
-    return (
-      
-      <div>
-        {/* {this.state.meme.map(meme => {
+   return (
+    <div>
+      {this.state.meme.map(meme => {
       return <DisplayMemes key={meme.id} name={meme.name} url={meme.url}/>
-    })} */}
-      </div>
+    })}
+    </div>
     )
   }
 }
