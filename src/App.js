@@ -1,9 +1,10 @@
 import React from 'react';
+import RenderMemes from './components/RenderMemes'
 
 function App() {
   return (
     <div>
-      Hello World 
+      <RenderMemes/>
     </div>
   );
 }
