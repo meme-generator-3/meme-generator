@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {} from 'react'
+import Meme from './components/Meme'
 
-function App() {
+
+const App = () => {
   return (
     <div>
-      Hello World 
+      <Meme />
+     
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
