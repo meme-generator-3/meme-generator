@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import CreateMeme from './CreateMeme'
 
 
 const Meme = () => {
@@ -6,6 +7,8 @@ const Meme = () => {
     const [memes, setMemes] =useState([])
     const [memeIndex, setMemeIndex] = useState(0);
     const [caption, setCaption] = useState([]);
+    const [values, setValues] = useState('');
+    const [showNewMeme, setShowNewMeme] = useState(false)
 
     // creates a random meme ouput when api loads and when refresh button is clicked
     const handleRandomMeme = (memes) => {
@@ -16,6 +19,21 @@ const Meme = () => {
           memes[j] = temp;
         }
       };
+
+      // handle input event get the value from inputs
+   
+     const handleInputChange = e => {
+        const {name, value} = e.target
+        setValues({...values, [name]: value})
+    }
+    console.log(values.first)
+// making a new meme and showing component on click 
+    const handleMakeMeme = e =>{
+      e.preventDefault();
+      setShowNewMeme({...showNewMeme, showNewMeme: true})
+      
+    }
+
 //api call to fetch memes 
    useEffect(() => {
        fetch ('https://api.imgflip.com/get_memes').then(res => res.json().then(res => {
@@ -35,27 +53,35 @@ const Meme = () => {
        
         
     }, [memes, memeIndex])
-                
+
+           
     // memes.length ? = checking to see if memes are being pulled from API 
     return (
         memes.length ? 
+     
         <div>
-             {caption.map((c, index) => (
-                <input key={index} placeholder='use your words'></input>
-                 ))
-             }
-
+          <input  placeholder='use your words' 
+          name="first" 
+          value={values.name} 
+          onChange={handleInputChange}></input> 
+          <input  placeholder='use your words' name="second" 
+          value={values.name} 
+          onChange={handleInputChange}></input>
             <img 
                 src={memes[memeIndex].url} 
                 alt={memes.name} />
             <button 
-                onClick={() =>setMemeIndex(memeIndex +1) }
+                onClick={() =>setMemeIndex(memeIndex +1)}
                 className='refresh-button'>Refresh Meme Image 
             </button>
             <button 
-                 className='make-meme-button'>Make This Meme</button>
-
-        </div> : <></>
+                 className='make-meme-button'
+                 onClick={handleMakeMeme}
+                 >Make This Meme</button>
+            {showNewMeme ? <CreateMeme firstVal={values.first} secondVal={values.second} img={memes[memeIndex].url} /> : null}
+            
+        </div> :
+         <></>
 
 
 
